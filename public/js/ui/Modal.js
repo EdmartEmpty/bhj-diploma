@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Класс Modal отвечает за
  * управление всплывающими окнами.
@@ -12,11 +14,12 @@ class Modal {
    * необходимо выкинуть ошибку.
    * */
   constructor(element){
-    if(!element){
-      throw new Error("ошибка, элемент должен быть!");
-    }
-    this.element = element;
-    this.registerEvents();
+    if (!element) {
+      throw new Error(`Error empty ${element} in class Modal`);
+    } else {
+        this.element = element;
+        this.registerEvents();
+      }
   }
 
   /**
@@ -25,14 +28,10 @@ class Modal {
    * (с помощью метода Modal.onClose)
    * */
   registerEvents() {
-    this.element.querySelectorAll('[data-dismiss="modal"]').forEach(button => {
-      button.addEventListener('click', (e) => this.onClose(e));
-    });
-    this.element.addEventListener('click', (e) => {
-      if (e.target === this.element) {
+    const btnClose = this.element.querySelectorAll('button[data-dismiss="modal"]');
+    btnClose.forEach(elem => elem.addEventListener('click', (e) => {
         this.onClose(e);
-      }
-    });
+    }));
   }
 
   /**
@@ -48,15 +47,12 @@ class Modal {
    * со значением «block»
    * */
   open() {
-    this.element.style.display = "block";
-    document.body.classList.add('modal-open');
-
+    this.element.style.display = 'block';
   }
   /**
    * Закрывает окно: удаляет CSS-свойство display
    * */
   close(){
-    this.element.style.display = "none";
-    document.body.classList.remove('modal-open');
+    this.element.style.display = 'none';
   }
 }

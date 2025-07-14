@@ -1,3 +1,4 @@
+'use strict';
 /**
  * Класс AsyncForm управляет всеми формами
  * приложения, которые не должны быть отправлены с
@@ -15,10 +16,10 @@ class AsyncForm {
   constructor(element) {
     if (!element) {
       throw new Error("Error");
-    } else {
+    } 
       this.element = element;
       this.registerEvents();
-    }
+    
   }
 
   /**
@@ -43,17 +44,16 @@ class AsyncForm {
    * */
   getData() {
     let result = {};
-    this.element.querySelectorAll("input").foreach((x) => { result[x.name] = x.value });
+    const form = this.element,
+      formData = new FormData(form),
+      entries = formData.entries();
 
-    // const form = this.element,
-    //   formData = new FormData(form),
-    //   entries = formData.entries();
-
-    // for (let item of entries) {
-    //   const key = item[0],
-    //     value = item[1];
-    //   result.key = value;
-    // }
+    for (let item of entries) {
+      const key = item[0],
+        value = item[1];
+      result[key] = value;
+    }
+    
     return result;
   }
 
@@ -66,6 +66,6 @@ class AsyncForm {
    * данные, полученные из метода getData()
    * */
   submit() {
-    this.onSubmit(this.getData);
+    this.onSubmit(this.getData());
   }
 }

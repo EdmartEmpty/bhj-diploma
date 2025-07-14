@@ -6,7 +6,7 @@
 const createRequest = (options = {}) => {
     let { url, data, method, callback } = options;
     let xhr = new XMLHttpRequest();
-
+   
     xhr.responseType = "json";
 
     xhr.onload = function () {
@@ -20,14 +20,14 @@ const createRequest = (options = {}) => {
         }
     }
 
-    if (method.toUpperCase() === "GET") {
+    if (method === "GET") {
         let string = new URLSearchParams();
         if (data) {
             for (let key in data) {
                 string.append(key, data[key]);
             }
         }
-        console.log(`${url}?${string.toString()}`);
+        
         xhr.open("GET", `${url}?${string.toString()}`);
         xhr.send();
     } else {
@@ -35,7 +35,7 @@ const createRequest = (options = {}) => {
         for (let key in data) {
             formData.append(key, data[key]);
         }
-        xhr.open(method.toUpperCase(), url);
+        xhr.open(method, url);
         xhr.send(formData);
     }
 

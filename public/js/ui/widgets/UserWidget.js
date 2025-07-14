@@ -4,6 +4,8 @@
  * после авторизации или его выхода из системы
  * */
 
+
+
 class UserWidget {
   /**
    * Устанавливает полученный элемент
@@ -29,8 +31,8 @@ class UserWidget {
   update(){
     if(User.current()){
 
-       document.querySelector(".user-name").textContent = "User";
-       console.log(User.fetch((err,response) => console.log(response)));
+        document.querySelector(".user-name").textContent = User.current().name;
+
     }
   }
 }

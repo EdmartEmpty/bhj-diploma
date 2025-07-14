@@ -35,37 +35,33 @@ class Sidebar {
    * При нажатии на кнопку выхода вызывает User.logout
    */
   static initAuthLinks() {
-    // Обработчик для кнопки входа
-    const loginBtn = document.querySelector('.menu-item_login a');
+  
+    const loginBtn = document.querySelector('.menu-item_login');
     if (loginBtn) {
       loginBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        const modal = App.getModal('login');
-        if (modal) {
-          modal.open();
-        }
+       App.getModal('login').open();
+        
       });
     }
 
-    // Обработчик для кнопки регистрации
-    const registerBtn = document.querySelector('.menu-item_register a');
+    
+    const registerBtn = document.querySelector('.menu-item_register');
     if (registerBtn) {
       registerBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        const modal = App.getModal('register');
-        if (modal) {
-          modal.open();
-        }
+        App.getModal('register').open();
+        
       });
     }
 
-    // Обработчик для кнопки выхода
-    const logoutBtn = document.querySelector('.menu-item_logout a');
+    
+    const logoutBtn = document.querySelector('.menu-item_logout');
     if (logoutBtn) {
       logoutBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        User.logout((err, response) => {
-          if (response && response.success) {
+        User.logout({},(err, response) => {
+          if (err === null && response.success) {
             App.setState('init');
           }
         });
@@ -73,3 +69,5 @@ class Sidebar {
     }
   }
 }
+
+

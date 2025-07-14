@@ -14,7 +14,12 @@ class AccountsWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor( element ) {
+      if(!element){
+        throw new Error("element must be!");
+      }
 
+      this.element = element;
+      
   }
 
   /**
