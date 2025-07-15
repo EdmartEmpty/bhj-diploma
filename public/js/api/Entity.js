@@ -10,9 +10,16 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static list(data, callback){
-    let options = {url: this.URL,data,callback,method: "GET"};
-    createRequest(options);
-  }
+    createRequest({
+      url: this.URL,
+      data,
+      callback,
+      method: "GET"
+    })
+    };
+
+    
+  
 
   /**
    * Создаёт счёт или доход/расход с помощью запроса
@@ -20,8 +27,12 @@ class Entity {
    * что наследуется от Entity)
    * */
   static create(data, callback) {
-    let options = {url: this.URL,data,callback,method: "PUT"};
-    createRequest(options);
+    createRequest({
+      url: this.URL,
+      data,
+      callback,
+      method: "PUT"
+    })
   }
 
   /**
@@ -29,8 +40,12 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static remove(data, callback ) {
-    let options = {url: this.URL,data,callback,method: "DELETE"};
-    createRequest(options);
+    createRequest({
+      url: this.URL,
+      data,
+      callback,
+      method: "DELETE"
+    })
   }
 }
 

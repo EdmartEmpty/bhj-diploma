@@ -13,13 +13,14 @@ class AccountsWidget {
    * Если переданный элемент не существует,
    * необходимо выкинуть ошибку.
    * */
-  constructor( element ) {
-      if(!element){
-        throw new Error("element must be!");
-      }
+  constructor(element) {
+    if (!element) {
+      throw new Error("element must be!");
+    }
 
-      this.element = element;
-      
+    this.element = element;
+    this.registerEvents();
+    this.update();
   }
 
   /**
@@ -30,7 +31,17 @@ class AccountsWidget {
    * вызывает AccountsWidget.onSelectAccount()
    * */
   registerEvents() {
+    this.element.addEventListener("click", (e) => {
 
+      e.preventDefault();
+      if (e.target === this.element.querySelector(".create-account")) {
+        App.getModal("createAccount").open();
+      }
+      if (e.target.closest(".account")) {
+        this.onSelectAccount(e.target.closest(".account"));
+      }
+
+    })
   }
 
   /**
@@ -44,7 +55,15 @@ class AccountsWidget {
    * метода renderItem()
    * */
   update() {
+    if (User.current()) {
+      Account.list(User.current(),(err, response) => {
+        if (response.data) {
+          this.clear();
+          this.renderItem(response.data);
+        }
+      });
 
+    }
   }
 
   /**
@@ -53,7 +72,7 @@ class AccountsWidget {
    * в боковой колонке
    * */
   clear() {
-
+    [...this.element.querySelectorAll('.account')].forEach(item => item.remove());
   }
 
   /**
@@ -63,8 +82,11 @@ class AccountsWidget {
    * счёта класс .active.
    * Вызывает App.showPage( 'transactions', { account_id: id_счёта });
    * */
-  onSelectAccount( element ) {
+  onSelectAccount(element) {
+    this.element.querySelectorAll(".active").forEach(el => {el.classList.remove("active");})
 
+    element.classList.add("active");
+    App.showPage( 'transactions', { account_id: id_счёта });
   }
 
   /**
@@ -72,8 +94,8 @@ class AccountsWidget {
    * отображения в боковой колонке.
    * item - объект с данными о счёте
    * */
-  getAccountHTML(item){
-
+  getAccountHTML(item) {
+      console.log(item);
   }
 
   /**
@@ -82,7 +104,7 @@ class AccountsWidget {
    * AccountsWidget.getAccountHTML HTML-код элемента
    * и добавляет его внутрь элемента виджета
    * */
-  renderItem(data){
-
+  renderItem(data) {
+    
   }
 }
