@@ -28,7 +28,10 @@ class TransactionsWidget {
   registerEvents() {
     document.querySelector(".create-income-button").addEventListener("click", e => {
       e.preventDefault();
-      App.getModal('newIncome').open();
+      let modal = new Modal(document.querySelector(".create-income-button"));
+  
+      App.modals.newIncome.open();
+       
     })
     document.querySelector(".create-expense-button").addEventListener("click", e => {
       e.preventDefault();
